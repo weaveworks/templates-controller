@@ -1,0 +1,31 @@
+# permissions for end users to edit gitopstemplates.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: clusterrole
+    app.kubernetes.io/instance: gitopstemplate-editor-role
+    app.kubernetes.io/component: rbac
+    app.kubernetes.io/created-by: templates-controller
+    app.kubernetes.io/part-of: templates-controller
+    app.kubernetes.io/managed-by: kustomize
+  name: gitopstemplate-editor-role
+rules:
+- apiGroups:
+  - templates.weave.works
+  resources:
+  - gitopstemplates
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - templates.weave.works
+  resources:
+  - gitopstemplates/status
+  verbs:
+  - get
