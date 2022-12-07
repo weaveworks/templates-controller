@@ -1,0 +1,12 @@
+apiVersion: capi.weave.works/v1alpha2
+kind: CAPITemplate
+metadata:
+  labels:
+    app.kubernetes.io/name: capitemplate
+    app.kubernetes.io/instance: capitemplate-sample
+    app.kubernetes.io/part-of: templates-controller
+    app.kuberentes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: templates-controller
+  name: capitemplate-sample
+spec:
+  # TODO(user): Add fields here

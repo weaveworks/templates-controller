@@ -1,0 +1,27 @@
+# permissions for end users to view capitemplates.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: clusterrole
+    app.kubernetes.io/instance: capitemplate-viewer-role
+    app.kubernetes.io/component: rbac
+    app.kubernetes.io/created-by: templates-controller
+    app.kubernetes.io/part-of: templates-controller
+    app.kubernetes.io/managed-by: kustomize
+  name: capitemplate-viewer-role
+rules:
+- apiGroups:
+  - capi.weave.works
+  resources:
+  - capitemplates
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - capi.weave.works
+  resources:
+  - capitemplates/status
+  verbs:
+  - get

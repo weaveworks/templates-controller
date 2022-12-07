@@ -1,0 +1,47 @@
+---
+apiVersion: admissionregistration.k8s.io/v1
+kind: MutatingWebhookConfiguration
+metadata:
+  creationTimestamp: null
+  name: mutating-webhook-configuration
+webhooks:
+- admissionReviewVersions:
+  - v1
+  clientConfig:
+    service:
+      name: webhook-service
+      namespace: system
+      path: /mutate-capi-weave-works-v1alpha1-capitemplate
+  failurePolicy: Fail
+  name: capitemplates.weave.works
+  rules:
+  - apiGroups:
+    - capi.weave.works
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - capitemplates
+  sideEffects: None
+- admissionReviewVersions:
+  - v1
+  clientConfig:
+    service:
+      name: webhook-service
+      namespace: system
+      path: /mutate-templates-weave-works-v1alpha1-gitopstemplate
+  failurePolicy: Fail
+  name: templates.weave.works
+  rules:
+  - apiGroups:
+    - templates.weave.works
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - gitopstemplates
+  sideEffects: None
