@@ -6,6 +6,8 @@ import (
 	"github.com/weaveworks/templates-controller/apis/core"
 )
 
+const Kind = "CAPITemplate"
+
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
 //+kubebuilder:storageversion
