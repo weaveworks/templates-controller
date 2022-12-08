@@ -18,6 +18,10 @@ type CAPITemplate struct {
 	Spec core.TemplateSpec `json:"spec,omitempty"`
 }
 
+func (t CAPITemplate) GetSpec() core.TemplateSpec {
+	return t.Spec
+}
+
 // Hub marks this as a conversion hub.
 //
 // https://book.kubebuilder.io/multiversion-tutorial/conversion.html
