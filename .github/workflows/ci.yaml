@@ -37,6 +37,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # for git describe
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - name: Setup
         uses: actions/setup-go@v3
         with:
@@ -46,3 +49,5 @@ jobs:
         run: echo "machine github.com login ${{ github.actor }} password ${{ secrets.BUILD_BOT_TOKEN }}" | tee ~/.netrc .netrc
       - name: Build
         run: make docker-build
+      - name: push
+        run: IMG=ghcr.io/weaveworks/templates-controller:$(git describe --always) make docker-push
