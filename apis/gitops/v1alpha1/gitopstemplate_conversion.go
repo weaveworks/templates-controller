@@ -3,7 +3,6 @@ package v1alpha1
 import (
 	"sigs.k8s.io/controller-runtime/pkg/conversion"
 
-	"github.com/weaveworks/templates-controller/apis/core"
 	gitopsv1alpha2 "github.com/weaveworks/templates-controller/apis/gitops/v1alpha2"
 )
 
@@ -19,10 +18,9 @@ func (src *GitOpsTemplate) ConvertTo(dstRaw conversion.Hub) error {
 
 // ConvertFrom converts from the Hub version (v1) to this version.
 func (dst *GitOpsTemplate) ConvertFrom(srcRaw conversion.Hub) error {
-	gitopstemplatelog.Info("converting From GitOps template")
+	gitopstemplatelog.Error(nil, "converting to v1alpha1, this doesn't work")
 	src := srcRaw.(*gitopsv1alpha2.GitOpsTemplate)
 	dst.ObjectMeta = src.ObjectMeta
-	dst.Spec = core.ConvertV2SpecToV1Spec(src.Spec)
 
 	return nil
 }
