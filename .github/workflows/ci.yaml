@@ -24,9 +24,6 @@ jobs:
         with:
           go-version: 1.19.x
           cache: true
-      - name: Prepare
-        run: |
-          echo "machine github.com login wge-build-bot password ${{ secrets.BUILD_BOT_TOKEN }}" > ~/.netrc
       - name: Test
         run: make test
 
@@ -46,7 +43,7 @@ jobs:
           go-version: 1.19.x
           cache: true
       - name: Prepare # .netrc is used by docker-build, ~/.netrc is used by go test
-        run: echo "machine github.com login ${{ github.actor }} password ${{ secrets.BUILD_BOT_TOKEN }}" | tee ~/.netrc .netrc
+        run: echo "machine github.com login wge-build-bot password ${{ secrets.BUILD_BOT_TOKEN }}" | tee ~/.netrc .netrc
       - name: Build
         run: make docker-build
       - name: push
