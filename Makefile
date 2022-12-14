@@ -1,6 +1,7 @@
 
 # Image URL to use all building/pushing image targets
-IMG ?= controller:latest
+GIT_VERSION = $(shell git describe --tags --always --dirty)
+IMG ?= ghcr.io/weaveworks/templates-controller:$(GIT_VERSION)
 # ENVTEST_K8S_VERSION refers to the version of kubebuilder assets to be downloaded by envtest binary.
 ENVTEST_K8S_VERSION = 1.25.0
 
