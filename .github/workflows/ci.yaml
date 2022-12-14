@@ -42,9 +42,11 @@ jobs:
         with:
           go-version: 1.19.x
           cache: true
-      - name: Prepare # .netrc is used by docker-build, ~/.netrc is used by go test
-        run: echo "machine github.com login wge-build-bot password ${{ secrets.BUILD_BOT_TOKEN }}" | tee ~/.netrc .netrc
       - name: Build
         run: make docker-build
+      - name: Docker login
+        # .netrc is used by docker-build, ~/.netrc is used by go test
+        # run: echo "machine github.com login wge-build-bot password ${{ secrets.BUILD_BOT_TOKEN }}" | tee ~/.netrc .netrc
+        run: echo "${{ secrets.BUILD_BOT_TOKEN }}" | docker login ghcr.io -u wge-build-bot --password-stdin
       - name: push
         run: IMG=ghcr.io/weaveworks/templates-controller:$(git describe --always) make docker-push
