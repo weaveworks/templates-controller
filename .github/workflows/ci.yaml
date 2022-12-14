@@ -26,7 +26,7 @@ jobs:
           cache: true
       - name: Prepare
         run: |
-          echo "machine github.com login ${{ github.actor }} password ${{ secrets.BUILD_BOT_TOKEN }}" > ~/.netrc
+          echo "machine github.com login wge-build-bot password ${{ secrets.BUILD_BOT_TOKEN }}" > ~/.netrc
       - name: Test
         run: make test
 
