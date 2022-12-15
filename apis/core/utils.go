@@ -13,6 +13,7 @@ func ConvertV1SpecToSpec(s TemplateSpecV1) TemplateSpec {
 	}
 }
 
+// Convert v1alpha2 spec to v1alpha1 spec
 func ConvertV2SpecToV1Spec(s TemplateSpec) TemplateSpecV1 {
 	resourceTemplates := []ResourceTemplateContent{}
 	for _, rt := range s.ResourceTemplates {
