@@ -12,3 +12,18 @@ func ConvertV1SpecToSpec(s TemplateSpecV1) TemplateSpec {
 		},
 	}
 }
+
+func ConvertV2SpecToV1Spec(s TemplateSpec) TemplateSpecV1 {
+	resourceTemplates := []ResourceTemplateContent{}
+	for _, rt := range s.ResourceTemplates {
+		resourceTemplates = append(resourceTemplates, rt.Content...)
+	}
+
+	return TemplateSpecV1{
+		Description:       s.Description,
+		RenderType:        s.RenderType,
+		Params:            s.Params,
+		Charts:            s.Charts,
+		ResourceTemplates: resourceTemplates,
+	}
+}
