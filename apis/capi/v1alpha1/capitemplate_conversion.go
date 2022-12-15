@@ -16,7 +16,7 @@ func (src *CAPITemplate) ConvertTo(dstRaw conversion.Hub) error {
 	return nil
 }
 
-// ConvertFrom converts from the Hub version (v1) to this version.
+// ConvertFrom converts from the Hub version (v1alpha2) to this version (v1alpha1).
 func (dst *CAPITemplate) ConvertFrom(srcRaw conversion.Hub) error {
 	capitemplatelog.Info("converting From CAPI template")
 	src := srcRaw.(*capiv1alpha2.CAPITemplate)

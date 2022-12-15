@@ -17,7 +17,7 @@ func (src *GitOpsTemplate) ConvertTo(dstRaw conversion.Hub) error {
 	return nil
 }
 
-// ConvertFrom converts from the Hub version (v1) to this version.
+// ConvertFrom converts from the Hub version (v1alpha2) to this version (v1alpha1).
 func (dst *GitOpsTemplate) ConvertFrom(srcRaw conversion.Hub) error {
 	gitopstemplatelog.Info("converting From GitOps template")
 	src := srcRaw.(*gitopsv1alpha2.GitOpsTemplate)
