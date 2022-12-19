@@ -113,7 +113,7 @@ type HelmReleaseTemplateSpec struct {
 // +kubebuilder:object:generate=true
 type ResourceTemplate struct {
 	Path    string                    `json:"path,omitempty"`
-	Content []ResourceTemplateContent `json:"content"`
+	Content []ResourceTemplateContent `json:"content,omitempty"`
 }
 
 // HelmReleaseTemplate is the HelmRelease.spec that can be overridden

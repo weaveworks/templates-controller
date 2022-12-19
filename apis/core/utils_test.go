@@ -8,7 +8,7 @@ import (
 )
 
 func TestConvertV1SpectToSpec(t *testing.T) {
-	v1Spec := TemplateSpecV1{
+	expected := TemplateSpec{
 		Description: "description",
 		RenderType:  "renderType",
 		Params: []TemplateParam{
@@ -24,25 +24,58 @@ func TestConvertV1SpectToSpec(t *testing.T) {
 				},
 			},
 		},
-		ResourceTemplates: []ResourceTemplateContent{
-			makeTemplateResource("raw"),
+		// only diff is here
+		ResourceTemplates: []ResourceTemplate{
+			{
+				Content: []ResourceTemplateContent{
+					makeTemplateResource("raw"),
+				},
+			},
 		},
 	}
 
+	v1Spec := makeV1Alpha1TemplateSpec()
 	spec := ConvertV1SpecToSpec(v1Spec)
 
-	// All the bits of the spec made it
-	assert.Equal(t, v1Spec.Description, spec.Description)
-	assert.Equal(t, v1Spec.RenderType, spec.RenderType)
-	assert.Equal(t, v1Spec.Params, spec.Params)
-	assert.Equal(t, v1Spec.Charts, spec.Charts)
-
 	// What we actually convert, wrap the old Content under `Content`
-	assert.Equal(t, v1Spec.ResourceTemplates, spec.ResourceTemplates[0].Content)
+	assert.Equal(t, expected, spec)
 }
 
 func TestConvertV2SpecToV1Spec(t *testing.T) {
-	v2spec := TemplateSpec{
+	expected := TemplateSpecV1{
+		Description: "description",
+		RenderType:  "renderType",
+		Params: []TemplateParam{
+			{
+				Name:        "name",
+				Description: "description",
+			},
+		},
+		Charts: ChartsSpec{
+			Items: []Chart{
+				{
+					Chart: "chart",
+				},
+			},
+		},
+		// only diff is here
+		// everything concatenated, paths lost
+		ResourceTemplates: []ResourceTemplateContent{
+			makeTemplateResource("foo"),
+			makeTemplateResource("foo2"),
+			makeTemplateResource("bar"),
+			makeTemplateResource("bar2"),
+		},
+	}
+
+	v2spec := makeTemplateSpec()
+	v1Spec := ConvertV2SpecToV1Spec(v2spec)
+
+	assert.Equal(t, expected, v1Spec)
+}
+
+func makeTemplateSpec() TemplateSpec {
+	return TemplateSpec{
 		Description: "description",
 		RenderType:  "renderType",
 		Params: []TemplateParam{
@@ -75,24 +108,29 @@ func TestConvertV2SpecToV1Spec(t *testing.T) {
 			},
 		},
 	}
+}
 
-	v1Spec := ConvertV2SpecToV1Spec(v2spec)
-
-	// All the bits of the spec made it
-	assert.Equal(t, v2spec.Description, v1Spec.Description)
-	assert.Equal(t, v2spec.RenderType, v1Spec.RenderType)
-	assert.Equal(t, v2spec.Params, v1Spec.Params)
-	assert.Equal(t, v2spec.Charts, v1Spec.Charts)
-
-	// everything concatenated, paths lost
-	expectedTemplateResources := []ResourceTemplateContent{
-		makeTemplateResource("foo"),
-		makeTemplateResource("foo2"),
-		makeTemplateResource("bar"),
-		makeTemplateResource("bar2"),
+func makeV1Alpha1TemplateSpec() TemplateSpecV1 {
+	return TemplateSpecV1{
+		Description: "description",
+		RenderType:  "renderType",
+		Params: []TemplateParam{
+			{
+				Name:        "name",
+				Description: "description",
+			},
+		},
+		Charts: ChartsSpec{
+			Items: []Chart{
+				{
+					Chart: "chart",
+				},
+			},
+		},
+		ResourceTemplates: []ResourceTemplateContent{
+			makeTemplateResource("raw"),
+		},
 	}
-
-	assert.Equal(t, expectedTemplateResources, v1Spec.ResourceTemplates)
 }
 
 func makeTemplateResource(data string) ResourceTemplateContent {
