@@ -6,6 +6,8 @@ import (
 	"github.com/weaveworks/templates-controller/apis/core"
 )
 
+const Kind = "CAPITemplate"
+
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
 //+kubebuilder:storageversion
@@ -16,6 +18,10 @@ type CAPITemplate struct {
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
 	Spec core.TemplateSpec `json:"spec,omitempty"`
+}
+
+func (t CAPITemplate) GetSpec() core.TemplateSpec {
+	return t.Spec
 }
 
 // Hub marks this as a conversion hub.

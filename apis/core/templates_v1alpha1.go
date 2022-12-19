@@ -19,7 +19,10 @@ type TemplateSpecV1 struct {
 	// descriptions.
 	Params []TemplateParam `json:"params,omitempty"` // Described above
 
+	// Charts is the set of charts that are used in this template.
+	Charts ChartsSpec `json:"charts,omitempty"`
+
 	// ResourceTemplates are a set of templates for resources that are generated
 	// from this Template.
-	ResourceTemplates []ResourceTemplate `json:"resourcetemplates,omitempty"`
+	ResourceTemplates []ResourceTemplateContent `json:"resourcetemplates,omitempty"`
 }

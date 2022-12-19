@@ -44,12 +44,12 @@ type TemplateSpec struct {
 	// descriptions.
 	Params []TemplateParam `json:"params,omitempty"` // Described above
 
+	// Charts is the set of charts that are used in this template.
+	Charts ChartsSpec `json:"charts,omitempty"`
+
 	// ResourceTemplates are a set of templates for resources that are generated
 	// from this Template.
 	ResourceTemplates []ResourceTemplate `json:"resourcetemplates,omitempty"`
-
-	// TestField is purely here to ensure that our conversions are working.
-	TestField string `json:"testField,omitempty"`
 }
 
 // TemplateParam is a parameter that can be templated into a struct.
@@ -69,10 +69,73 @@ type TemplateParam struct {
 	Default string `json:"default,omitempty"`
 }
 
-// ResourceTemplate describes a resource to create.
+// ChartsSpec defines the spec for a set of Helm charts.
+// +kubebuilder:object:generate=true
+
+type ChartsSpec struct {
+	Items []Chart `json:"items,omitempty"`
+}
+
+// Chart is the set of values that control the default and required values
+// of a chart/profile in a template.
+// +kubebuilder:object:generate=true
+type Chart struct {
+	// Name of the chart/profile in the Helm repository.
+	// Shortcut to template.content.spec.chart.spec.chart
+	Chart string `json:"chart"`
+	// Default version to select.
+	// Shortcut to template.content.spec.chart.spec.version
+	Version string `json:"version,omitempty"`
+	// Shortcut to template.content.spec.targetNamespace
+	TargetNamespace string `json:"targetNamespace,omitempty"`
+	// Layer, overrides the default layer provided in the Helm Repository
+	Layer string `json:"layer,omitempty"`
+	// If true the chart/profile will always be installed
+	Required bool `json:"required,omitempty"`
+	// If true you can change the values and version of the chart/profile
+	Editable bool `json:"editable,omitempty"`
+	// Shortcut to template.content.spec.values
+	Values *HelmReleaseValues `json:"values,omitempty"`
+	// Template for the HelmRelease, merged with the default template
+	HelmReleaseTemplate HelmReleaseTemplateSpec `json:"template,omitempty"`
+}
+
+// HelmReleaseTemplateSpec is a future proof way to define a template with a path
+// path is not yet used, but will be used in the near future
+// +kubebuilder:object:generate=true
+type HelmReleaseTemplateSpec struct {
+	// Content of the template
+	Content *HelmReleaseTemplate `json:"content,omitempty"`
+}
+
+// ResourceTemplate holds a list of resources that can be created from a template
+// and the path to write them to.
+// +kubebuilder:object:generate=true
+type ResourceTemplate struct {
+	Path    string                    `json:"path,omitempty"`
+	Content []ResourceTemplateContent `json:"content,omitempty"`
+}
+
+// HelmReleaseTemplate is the HelmRelease.spec that can be overridden
+// +kubebuilder:skipversion
+// +kubebuilder:object:generate=true
+// +kubebuilder:pruning:PreserveUnknownFields
+type HelmReleaseTemplate struct {
+	runtime.RawExtension `json:",inline"`
+}
+
+// HelmReleaseValues describes the values for a profile.
 // +kubebuilder:skipversion
 // +kubebuilder:pruning:PreserveUnknownFields
 // +kubebuilder:object:generate=true
-type ResourceTemplate struct {
+type HelmReleaseValues struct {
+	runtime.RawExtension `json:",inline"`
+}
+
+// ResourceTemplateContent describes a resource to create.
+// +kubebuilder:skipversion
+// +kubebuilder:pruning:PreserveUnknownFields
+// +kubebuilder:object:generate=true
+type ResourceTemplateContent struct {
 	runtime.RawExtension `json:",inline"`
 }
