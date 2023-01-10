@@ -97,7 +97,17 @@ type Chart struct {
 	// Shortcut to template.content.spec.values
 	Values *HelmReleaseValues `json:"values,omitempty"`
 	// Template for the HelmRelease, merged with the default template
+	// Shortcut to template.content.spec.chart.spec.template
 	HelmReleaseTemplate HelmReleaseTemplateSpec `json:"template,omitempty"`
+	// Template for the HelmRepository
+	// Shortcut to template.content.spec.chart.spec.helmRepositoryTemplate
+	HelmRepositoryTemplate HelmRepositoryTemplateSpec `json:"helmRepositoryTemplate,omitempty"`
+}
+
+// HelmRepositoryTemplateSpec is a future proof way to define a template with a path
+// +kubebuilder:object:generate=true
+type HelmRepositoryTemplateSpec struct {
+	Path string `json:"path,omitempty"`
 }
 
 // HelmReleaseTemplateSpec is a future proof way to define a template with a path
@@ -122,6 +132,8 @@ type ResourceTemplate struct {
 // +kubebuilder:pruning:PreserveUnknownFields
 type HelmReleaseTemplate struct {
 	runtime.RawExtension `json:",inline"`
+	// Path of the template
+	Path string `json:"path,omitempty"`
 }
 
 // HelmReleaseValues describes the values for a profile.
