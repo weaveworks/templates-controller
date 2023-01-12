@@ -74,6 +74,10 @@ spec:
                           properties:
                             content:
                               description: Content of the template
+                              properties:
+                                path:
+                                  description: Path of the template
+                                  type: string
                               type: object
                               x-kubernetes-preserve-unknown-fields: true
                           type: object
@@ -202,6 +206,10 @@ spec:
                           properties:
                             content:
                               description: Content of the template
+                              properties:
+                                path:
+                                  description: Path of the template
+                                  type: string
                               type: object
                               x-kubernetes-preserve-unknown-fields: true
                           type: object

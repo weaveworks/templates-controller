@@ -132,6 +132,8 @@ type ResourceTemplate struct {
 // +kubebuilder:pruning:PreserveUnknownFields
 type HelmReleaseTemplate struct {
 	runtime.RawExtension `json:",inline"`
+	// Path of the template
+	Path string `json:"path,omitempty"`
 }
 
 // HelmReleaseValues describes the values for a profile.
