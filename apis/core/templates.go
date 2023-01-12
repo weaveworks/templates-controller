@@ -74,6 +74,9 @@ type TemplateParam struct {
 
 type ChartsSpec struct {
 	Items []Chart `json:"items,omitempty"`
+	// Template for the HelmRepository
+	// Shortcut to template.content.spec.chart.spec.helmRepositoryTemplate
+	HelmRepositoryTemplate HelmRepositoryTemplateSpec `json:"helmRepositoryTemplate,omitempty"`
 }
 
 // Chart is the set of values that control the default and required values
@@ -99,9 +102,6 @@ type Chart struct {
 	// Template for the HelmRelease, merged with the default template
 	// Shortcut to template.content.spec.chart.spec.template
 	HelmReleaseTemplate HelmReleaseTemplateSpec `json:"template,omitempty"`
-	// Template for the HelmRepository
-	// Shortcut to template.content.spec.chart.spec.helmRepositoryTemplate
-	HelmRepositoryTemplate HelmRepositoryTemplateSpec `json:"helmRepositoryTemplate,omitempty"`
 }
 
 // HelmRepositoryTemplateSpec is a future proof way to define a template with a path
@@ -132,8 +132,6 @@ type ResourceTemplate struct {
 // +kubebuilder:pruning:PreserveUnknownFields
 type HelmReleaseTemplate struct {
 	runtime.RawExtension `json:",inline"`
-	// Path of the template
-	Path string `json:"path,omitempty"`
 }
 
 // HelmReleaseValues describes the values for a profile.
