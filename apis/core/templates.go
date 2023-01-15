@@ -114,6 +114,8 @@ type HelmRepositoryTemplateSpec struct {
 // path is not yet used, but will be used in the near future
 // +kubebuilder:object:generate=true
 type HelmReleaseTemplateSpec struct {
+	// Path of the template
+	Path string `json:"path,omitempty"`
 	// Content of the template
 	Content *HelmReleaseTemplate `json:"content,omitempty"`
 }
@@ -132,8 +134,6 @@ type ResourceTemplate struct {
 // +kubebuilder:pruning:PreserveUnknownFields
 type HelmReleaseTemplate struct {
 	runtime.RawExtension `json:",inline"`
-	// Path of the template
-	Path string `json:"path,omitempty"`
 }
 
 // HelmReleaseValues describes the values for a profile.
