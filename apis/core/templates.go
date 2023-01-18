@@ -74,7 +74,7 @@ type TemplateParam struct {
 
 type ChartsSpec struct {
 	Items []Chart `json:"items,omitempty"`
-	// Template for the HelmRepository
+	// Template for the HelmRepository.
 	// Shortcut to template.content.spec.chart.spec.helmRepositoryTemplate
 	HelmRepositoryTemplate HelmRepositoryTemplateSpec `json:"helmRepositoryTemplate,omitempty"`
 }
@@ -99,7 +99,7 @@ type Chart struct {
 	Editable bool `json:"editable,omitempty"`
 	// Shortcut to template.content.spec.values
 	Values *HelmReleaseValues `json:"values,omitempty"`
-	// Template for the HelmRelease, merged with the default template
+	// Template for the HelmRelease, merged with the default template.
 	// Shortcut to template.content.spec.chart.spec.template
 	HelmReleaseTemplate HelmReleaseTemplateSpec `json:"template,omitempty"`
 }
