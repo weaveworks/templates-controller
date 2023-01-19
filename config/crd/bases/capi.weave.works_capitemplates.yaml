@@ -70,7 +70,7 @@ spec:
                           type: string
                         template:
                           description: Template for the HelmRelease, merged with the
-                            default template. Shortcut to template.content.spec.chart.spec.template
+                            default template.
                           properties:
                             content:
                               description: Content of the template
@@ -199,7 +199,7 @@ spec:
                           type: string
                         template:
                           description: Template for the HelmRelease, merged with the
-                            default template. Shortcut to template.content.spec.chart.spec.template
+                            default template.
                           properties:
                             content:
                               description: Content of the template
