@@ -100,7 +100,6 @@ type Chart struct {
 	// Shortcut to template.content.spec.values
 	Values *HelmReleaseValues `json:"values,omitempty"`
 	// Template for the HelmRelease, merged with the default template.
-	// Shortcut to template.content.spec.chart.spec.template
 	HelmReleaseTemplate HelmReleaseTemplateSpec `json:"template,omitempty"`
 }
 
