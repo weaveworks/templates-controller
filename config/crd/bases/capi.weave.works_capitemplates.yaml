@@ -40,8 +40,7 @@ spec:
                 description: Charts is the set of charts that are used in this template.
                 properties:
                   helmRepositoryTemplate:
-                    description: Template for the HelmRepository. 
-                      Shortcut to template.content.spec.chart.spec.helmRepositoryTemplate
+                    description: Template for the HelmRepository. Shortcut to template.content.spec.chart.spec.helmRepositoryTemplate
                     properties:
                       path:
                         type: string
@@ -71,8 +70,7 @@ spec:
                           type: string
                         template:
                           description: Template for the HelmRelease, merged with the
-                            default template. 
-                            Shortcut to template.content.spec.chart.spec.template
+                            default template. Shortcut to template.content.spec.chart.spec.template
                           properties:
                             content:
                               description: Content of the template
@@ -87,8 +85,7 @@ spec:
                           type: object
                           x-kubernetes-preserve-unknown-fields: true
                         version:
-                          description: Default version to select. 
-                            Shortcut to template.content.spec.chart.spec.version
+                          description: Default version to select. Shortcut to template.content.spec.chart.spec.version
                           type: string
                       required:
                       - chart
@@ -172,8 +169,7 @@ spec:
                 description: Charts is the set of charts that are used in this template.
                 properties:
                   helmRepositoryTemplate:
-                    description: Template for the HelmRepository. 
-                      Shortcut to template.content.spec.chart.spec.helmRepositoryTemplate
+                    description: Template for the HelmRepository. Shortcut to template.content.spec.chart.spec.helmRepositoryTemplate
                     properties:
                       path:
                         type: string
@@ -203,8 +199,7 @@ spec:
                           type: string
                         template:
                           description: Template for the HelmRelease, merged with the
-                            default template. 
-                            Shortcut to template.content.spec.chart.spec.template
+                            default template. Shortcut to template.content.spec.chart.spec.template
                           properties:
                             content:
                               description: Content of the template
@@ -219,8 +214,7 @@ spec:
                           type: object
                           x-kubernetes-preserve-unknown-fields: true
                         version:
-                          description: Default version to select. 
-                            Shortcut to template.content.spec.chart.spec.version
+                          description: Default version to select. Shortcut to template.content.spec.chart.spec.version
                           type: string
                       required:
                       - chart

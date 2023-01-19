@@ -104,14 +104,14 @@ type Chart struct {
 	HelmReleaseTemplate HelmReleaseTemplateSpec `json:"template,omitempty"`
 }
 
-// HelmRepositoryTemplateSpec is a future proof way to define a template with a path
+// HelmRepositoryTemplateSpec is a way to define a repository template path
 // +kubebuilder:object:generate=true
 type HelmRepositoryTemplateSpec struct {
 	Path string `json:"path,omitempty"`
 }
 
-// HelmReleaseTemplateSpec is a future proof way to define a template with a path
-// path is not yet used, but will be used in the near future
+// HelmReleaseTemplateSpec is a way to define a template with a path
+// content is not yet used, but will be used in the near future
 // +kubebuilder:object:generate=true
 type HelmReleaseTemplateSpec struct {
 	// Path of the template
