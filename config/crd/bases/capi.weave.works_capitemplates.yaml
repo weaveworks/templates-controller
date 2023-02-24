@@ -277,6 +277,10 @@ spec:
                       type: array
                     path:
                       type: string
+                    raw:
+                      description: Raw is the content of the resource template in
+                        a string format. It supports comments in the template file.
+                      type: string
                   type: object
                 type: array
             type: object

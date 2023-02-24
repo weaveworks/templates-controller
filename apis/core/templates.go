@@ -125,6 +125,9 @@ type HelmReleaseTemplateSpec struct {
 type ResourceTemplate struct {
 	Path    string                    `json:"path,omitempty"`
 	Content []ResourceTemplateContent `json:"content,omitempty"`
+	// Raw is the content of the resource template in a string format.
+	// It supports comments in the template file.
+	Raw string `json:"raw,omitempty"`
 }
 
 // HelmReleaseTemplate is the HelmRelease.spec that can be overridden
