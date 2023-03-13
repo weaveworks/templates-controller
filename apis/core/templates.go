@@ -61,7 +61,7 @@ type TemplateParam struct {
 	// Required indicates whether the param must contain a non-empty value
 	// +kubebuilder:default:=true
 	// +optional
-	Required bool     `json:"required,omitempty"`
+	Required bool     `json:"required"`
 	Options  []string `json:"options,omitempty"`
 
 	// Default specifies the default value for the parameter
