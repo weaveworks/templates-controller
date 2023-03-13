@@ -15,6 +15,8 @@ import (
 
 	capiv1alpha1 "github.com/weaveworks/templates-controller/apis/capi/v1alpha1"
 	capiv1alpha2 "github.com/weaveworks/templates-controller/apis/capi/v1alpha2"
+	gitopsv1alpha1 "github.com/weaveworks/templates-controller/apis/gitops/v1alpha1"
+	gitopsv1alpha2 "github.com/weaveworks/templates-controller/apis/gitops/v1alpha2"
 )
 
 var (
@@ -29,6 +31,8 @@ func init() {
 func TestMain(m *testing.M) {
 	utilruntime.Must(capiv1alpha1.AddToScheme(scheme.Scheme))
 	utilruntime.Must(capiv1alpha2.AddToScheme(scheme.Scheme))
+	utilruntime.Must(gitopsv1alpha1.AddToScheme(scheme.Scheme))
+	utilruntime.Must(gitopsv1alpha2.AddToScheme(scheme.Scheme))
 	testEnv = testenv.New(testenv.WithCRDPath(filepath.Join("..", "config", "crd", "bases")))
 
 	if err := (&CAPITemplateReconciler{
