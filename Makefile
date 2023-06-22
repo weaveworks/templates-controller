@@ -159,7 +159,7 @@ helmify:
 
 .PHONY: helm
 helm: manifests kustomize helmify
-	$(KUSTOMIZE) build config/default | $(HELMIFY) -crd-dir ../weave-gitops-enterprise/charts/templates-controller
+	rm -rf ../weave-gitops-enterprise/charts/templates-controller && $(KUSTOMIZE) build config/default | $(HELMIFY) -crd-dir ../weave-gitops-enterprise/charts/templates-controller
 
 
 # go-get-tool will 'go get' any package $2 and install it to $1.
