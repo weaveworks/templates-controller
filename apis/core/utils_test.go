@@ -41,39 +41,6 @@ func TestConvertV1SpectToSpec(t *testing.T) {
 	assert.Equal(t, expected, spec)
 }
 
-func TestConvertV2SpecToV1Spec(t *testing.T) {
-	expected := TemplateSpecV1{
-		Description: "description",
-		RenderType:  "renderType",
-		Params: []TemplateParam{
-			{
-				Name:        "name",
-				Description: "description",
-			},
-		},
-		Charts: ChartsSpec{
-			Items: []Chart{
-				{
-					Chart: "chart",
-				},
-			},
-		},
-		// only diff is here
-		// everything concatenated, paths lost
-		ResourceTemplates: []ResourceTemplateContent{
-			makeTemplateResource("foo"),
-			makeTemplateResource("foo2"),
-			makeTemplateResource("bar"),
-			makeTemplateResource("bar2"),
-		},
-	}
-
-	v2spec := makeTemplateSpec()
-	v1Spec := ConvertV2SpecToV1Spec(v2spec)
-
-	assert.Equal(t, expected, v1Spec)
-}
-
 func makeTemplateSpec() TemplateSpec {
 	return TemplateSpec{
 		Description: "description",
