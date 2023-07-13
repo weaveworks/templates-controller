@@ -17,25 +17,24 @@ limitations under the License.
 package main
 
 import (
+	"flag"
 	"os"
 
 	// Import all Kubernetes client auth plugins (e.g. Azure, GCP, OIDC, etc.)
 	// to ensure that exec-entrypoint and run can make use of them.
 	_ "k8s.io/client-go/plugin/pkg/client/auth"
 
-	"github.com/fluxcd/pkg/runtime/logger"
-	flag "github.com/spf13/pflag"
 	"k8s.io/apimachinery/pkg/runtime"
 	utilruntime "k8s.io/apimachinery/pkg/util/runtime"
 	clientgoscheme "k8s.io/client-go/kubernetes/scheme"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/healthz"
+	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
 	capiv1alpha1 "github.com/weaveworks/templates-controller/apis/capi/v1alpha1"
 	capiv1alpha2 "github.com/weaveworks/templates-controller/apis/capi/v1alpha2"
 	gitopsv1alpha1 "github.com/weaveworks/templates-controller/apis/gitops/v1alpha1"
 	gitopsv1alpha2 "github.com/weaveworks/templates-controller/apis/gitops/v1alpha2"
-	"github.com/weaveworks/templates-controller/controllers"
 	//+kubebuilder:scaffold:imports
 )
 
@@ -63,12 +62,13 @@ func main() {
 	flag.BoolVar(&enableLeaderElection, "leader-elect", false,
 		"Enable leader election for controller manager. "+
 			"Enabling this will ensure there is only one active controller manager.")
-
-	var logOptions logger.Options
-	logOptions.BindFlags(flag.CommandLine)
+	opts := zap.Options{
+		Development: true,
+	}
+	opts.BindFlags(flag.CommandLine)
 	flag.Parse()
 
-	ctrl.SetLogger(logger.NewLogger(logOptions))
+	ctrl.SetLogger(zap.New(zap.UseFlagOptions(&opts)))
 
 	mgr, err := ctrl.NewManager(ctrl.GetConfigOrDie(), ctrl.Options{
 		Scheme:                 scheme,
@@ -92,42 +92,6 @@ func main() {
 	if err != nil {
 		setupLog.Error(err, "unable to start manager")
 		os.Exit(1)
-	}
-
-	if err = (&controllers.CAPITemplateReconciler{
-		Client: mgr.GetClient(),
-		Scheme: mgr.GetScheme(),
-	}).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", "CAPITemplate")
-		os.Exit(1)
-	}
-	if err = (&controllers.GitOpsTemplateReconciler{
-		Client: mgr.GetClient(),
-		Scheme: mgr.GetScheme(),
-	}).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", "GitOpsTemplate")
-		os.Exit(1)
-	}
-
-	if os.Getenv("ENABLE_WEBHOOKS") != "false" {
-		if err = (&capiv1alpha1.CAPITemplate{}).SetupWebhookWithManager(mgr); err != nil {
-			setupLog.Error(err, "unable to create webhook", "webhook", "CAPITemplate - v1alpha1")
-			os.Exit(1)
-		}
-		if err = (&capiv1alpha2.CAPITemplate{}).SetupWebhookWithManager(mgr); err != nil {
-			setupLog.Error(err, "unable to create webhook", "webhook", "CAPITemplate - v1alpha2")
-			os.Exit(1)
-		}
-
-		if err = (&gitopsv1alpha1.GitOpsTemplate{}).SetupWebhookWithManager(mgr); err != nil {
-			setupLog.Error(err, "unable to create webhook", "webhook", "GitOpsTemplate - v1alpha1")
-			os.Exit(1)
-		}
-		if err = (&gitopsv1alpha2.GitOpsTemplate{}).SetupWebhookWithManager(mgr); err != nil {
-			setupLog.Error(err, "unable to create webhook", "webhook", "GigtOpsTemplate - v1alpha2")
-			os.Exit(1)
-		}
-
 	}
 
 	//+kubebuilder:scaffold:builder
