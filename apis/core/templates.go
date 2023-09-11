@@ -1,6 +1,7 @@
 package core
 
 import (
+	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 )
@@ -86,6 +87,11 @@ type Chart struct {
 	// Name of the chart/profile in the Helm repository.
 	// Shortcut to template.content.spec.chart.spec.chart
 	Chart string `json:"chart"`
+	// SourceRef is the name/namespace reference to the HelmRepository.
+	// No other source types are currently supported.
+	// The HelmRepository must be present on the rendering cluster.
+	// The full referenced HelmRepository resource will be included in the template output.
+	SourceRef corev1.ObjectReference `json:"sourceRef,omitempty"`
 	// Default version to select.
 	// Shortcut to template.content.spec.chart.spec.version
 	Version string `json:"version,omitempty"`
